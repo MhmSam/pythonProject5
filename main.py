@@ -70,3 +70,38 @@ print(f'The cumulative amount of electricity consumption in the months of the ye
 plt.pie(x2, labels = x3 )
 plt.show()
 
+
+import prep_data
+
+# Import and DataCleaning
+try:
+    last_wetter = pd.read_csv('Last_Wetter.csv')
+except FileNotFoundError:
+    # Lastgang
+    lastgang = pd.read_excel('R_strom_34277.xlsx', sheet_name=0)
+    lastgang = prep_data.add_time_info(data=lastgang)
+
+    # Wetter
+    wetter = prep_data.prep_wetter(lastgang)
+
+    # Combining lastgang and wetter and saving
+    last_wetter = prep_data.add_wetter(wetter, lastgang)
+    last_wetter.to_csv('last_wetter.csv')
+
+
+# Electricity consumption on different days of the week
+
+Sumof0 = last_wetter [last_wetter['Wochentag'] == 0]['Mittelwert'].sum()
+Sumof1 = last_wetter [last_wetter['Wochentag'] == 1]['Mittelwert'].sum()
+Sumof2 = last_wetter [last_wetter['Wochentag'] == 2]['Mittelwert'].sum()
+Sumof3 = last_wetter [last_wetter['Wochentag'] == 3]['Mittelwert'].sum()
+Sumof4 = last_wetter [last_wetter['Wochentag'] == 4]['Mittelwert'].sum()
+Sumof5 = last_wetter [last_wetter['Wochentag'] == 5]['Mittelwert'].sum()
+Sumof6 = last_wetter [last_wetter['Wochentag'] == 6]['Mittelwert'].sum()
+
+x4 = [Sumof0,Sumof1,Sumof2,Sumof3,Sumof4,Sumof5,Sumof6]
+print(x4)
+x5 = ['Moday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+
+plt.pie(x4, labels = x5)
+plt.show()

@@ -14,7 +14,7 @@ x = np.mean(lastgang['Mittelwert'])
 y = np.max(lastgang['Mittelwert'])
 z = np.min(lastgang['Mittelwert'])
 
-print(f'mean is {x}, max is {y}, and min is {z}')
+print(f' the mean of consumption is {x},the max of consumption is {y}, and the min of  consumption  is {z}')
 
 # Showing Mittelwert-plot by time
 
@@ -63,9 +63,9 @@ x2 = [SumMittelwertJan,SumMittelwertFeb,SumMittelwertMar,SumMittelwertApr,SumMit
       SumMittelwertNov,SumMittelwertDec]
 x3 = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
 
-print(f'The cumulative amount of electricity consumption in the months of the year is: {x2}')
+print(f'The cumulative amount of electricity consumption in the month is: {x2}')
 
-# showing pie-chart for the cumulative amount of electricity consumption in the months
+# showing pie-chart for the cumulative amount of electricity consumption in the month
 
 plt.pie(x2, labels = x3 )
 plt.show()
@@ -101,8 +101,10 @@ Sumof5 = last_wetter [last_wetter['Wochentag'] == 5]['Mittelwert'].sum()
 Sumof6 = last_wetter [last_wetter['Wochentag'] == 6]['Mittelwert'].sum()
 
 x4 = [Sumof0,Sumof1,Sumof2,Sumof3,Sumof4,Sumof5,Sumof6]
-print(x4)
-x5 = ['Moday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+print(f'The cumulative amount of electricity consumption in the week is: {x4}')
 
+# showing pie-chart for the cumulative amount of electricity consumption in the week
+
+x5 = ['Moday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 plt.pie(x4, labels = x5)
 plt.show()

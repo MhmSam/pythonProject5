@@ -70,6 +70,7 @@ print(f'The cumulative amount of electricity consumption in the months of the ye
 plt.pie(x2, labels = x3 )
 plt.show()
 
+# Import prep_data
 
 import prep_data
 

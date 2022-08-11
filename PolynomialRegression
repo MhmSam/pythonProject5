@@ -1,0 +1,53 @@
+################### Polynomial Regression ###################
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn import linear_model
+import pylab as pl
+
+
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn import linear_model
+
+
+df = pd.read_csv("Last_Wetter_1.csv")
+cdf = df[['Mittelwert', 'W_mean','S','Dampf_mean','Luft_d_mean','F_mean' , 'T_mean' , 'T_max' , 'T_min']]
+
+# Creating train and test dataset
+
+msk = np.random.rand(len(df)) < 0.8
+train = cdf[msk]
+test = cdf[~msk]
+
+# Polynomial regression
+
+train_x = np.asanyarray(train[['W_mean','S','Dampf_mean','Luft_d_mean','F_mean' , 'T_mean' , 'T_max' , 'T_min']])
+train_y = np.asanyarray(train[['Mittelwert']])
+
+test_x = np.asanyarray(test[['W_mean','S','Dampf_mean','Luft_d_mean','F_mean' , 'T_mean' , 'T_max' , 'T_min']])
+test_y = np.asanyarray(test[['Mittelwert']])
+
+
+poly = PolynomialFeatures(degree=5)
+train_x_poly = poly.fit_transform(train_x)
+train_x_poly
+
+
+clf = linear_model.LinearRegression()
+train_y_ = clf.fit(train_x_poly, train_y)
+# The coefficients
+print ('Coefficients: ', clf.coef_)
+print ('Intercept: ',clf.intercept_)
+
+# Prediction
+
+from sklearn.metrics import r2_score
+
+test_x_poly = poly.fit_transform(test_x)
+test_y_ = clf.predict(test_x_poly)
+
+print("Mean absolute error: %.2f" % np.mean(np.absolute(test_y_ - test_y)))
+print("Residual sum of squares (MSE): %.2f" % np.mean((test_y_ - test_y) ** 2))
+print("R2-score: %.2f" % r2_score(test_y,test_y_ ) )
+

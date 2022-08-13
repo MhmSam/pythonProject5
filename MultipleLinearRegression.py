@@ -7,55 +7,12 @@ from sklearn import linear_model
 import pylab as pl
 
 
-df = pd.read_csv("Last_Wetter_1.csv")
-cdf = df[['Mittelwert', 'W_mean','S','Dampf_mean','Luft_d_mean','F_mean' , 'T_mean' , 'T_max' , 'T_min']]
+
+df = pd.read_excel('Weather-V1.xlsx')
+cdf = df[['Average','FM','SDK','VPM','PM','UPM','TMK','TXK','TNK']]
 
 
-# Plot each of the columns in terms of "Mittelwert"
-
-plt.scatter(cdf.W_mean, cdf.Mittelwert,  color='blue')
-plt.xlabel("W_mean")
-plt.ylabel("Mittelwert")
-plt.show()
-
-plt.scatter(cdf.S, cdf.Mittelwert,  color='blue')
-plt.xlabel("S")
-plt.ylabel("Mittelwert")
-plt.show()
-
-plt.scatter(cdf.Dampf_mean, cdf.Mittelwert,  color='blue')
-plt.xlabel("Dampf_mean")
-plt.ylabel("Mittelwert")
-plt.show()
-
-plt.scatter(cdf.Luft_d_mean, cdf.Mittelwert,  color='blue')
-plt.xlabel("Luft_d_mean")
-plt.ylabel("Mittelwert")
-plt.show()
-
-
-plt.scatter(cdf.F_mean, cdf.Mittelwert,  color='blue')
-plt.xlabel("F_mean")
-plt.ylabel("Mittelwert")
-plt.show()
-
-plt.scatter(cdf.T_mean, cdf.Mittelwert,  color='blue')
-plt.xlabel("T_mean")
-plt.ylabel("Mittelwert")
-plt.show()
-
-plt.scatter(cdf.T_max, cdf.Mittelwert,  color='blue')
-plt.xlabel("T_max")
-plt.ylabel("Mittelwert")
-plt.show()
-
-
-plt.scatter(cdf.T_min, cdf.Mittelwert,  color='blue')
-plt.xlabel("T_min")
-plt.ylabel("Mittelwert")
-plt.show()
-
-# Separation of data for training and testing
+# Creation of data for train and test
 
 msk = np.random.rand(len(df)) < 0.8
 train = cdf[msk]
@@ -64,21 +21,74 @@ test = cdf[~msk]
 # Multiple Regression Model
 
 regr = linear_model.LinearRegression()
-x = np.asanyarray(train[['W_mean','S','Dampf_mean','Luft_d_mean','F_mean' , 'T_mean' , 'T_max' , 'T_min']])
-y = np.asanyarray(train[['Mittelwert']])
+x = np.asanyarray(train[['FM','SDK','VPM','PM','UPM','TMK','TXK','TNK']])
+y = np.asanyarray(train[['Average']])
 regr.fit (x, y)
 # The coefficients
 print ('Coefficients: ', regr.coef_)
 
+
 # Prediction
 
-y_hat= regr.predict(test[['W_mean','S','Dampf_mean','Luft_d_mean','F_mean' , 'T_mean' , 'T_max' , 'T_min']])
-x = np.asanyarray(test[['W_mean','S','Dampf_mean','Luft_d_mean','F_mean' , 'T_mean' , 'T_max' , 'T_min']])
-y = np.asanyarray(test[['Mittelwert']])
+y_hat= regr.predict(test[['FM','SDK','VPM','PM','UPM','TMK','TXK','TNK']])
+x = np.asanyarray(test[['FM','SDK','VPM','PM','UPM','TMK','TXK','TNK']])
+y = np.asanyarray(test[['Average']])
 print("Residual sum of squares: %.2f"
       % np.mean((y_hat - y) ** 2))
 
 # Explained variance score: 1 is perfect prediction
 print('Variance score: %.2f' % regr.score(x, y))
 
+
+# Plot each of the columns in terms of "Average"
+
+
+plt.scatter(cdf.FM, cdf.Average,  color='blue')
+plt.xlabel("FM")
+plt.ylabel("Average")
+plt.show()
+
+plt.scatter(cdf.SDK, cdf.Average,  color='blue')
+plt.xlabel("SDK")
+plt.ylabel("Average")
+plt.show()
+
+
+#VPM can be a relative good predictor
+
+plt.scatter(cdf.VPM, cdf.Average,  color='blue')
+plt.xlabel("VPM")
+plt.ylabel("Average")
+plt.show()
+
+plt.scatter(cdf.PM, cdf.Average,  color='blue')
+plt.xlabel("PM")
+plt.ylabel("Average")
+plt.show()
+
+plt.scatter(cdf.UPM, cdf.Average,  color='blue')
+plt.xlabel("UPM")
+plt.ylabel("Average")
+plt.show()
+
+#TMK can be a relative good predictor
+
+plt.scatter(cdf.TMK, cdf.Average,  color='blue')
+plt.xlabel("TMK")
+plt.ylabel("Average")
+plt.show()
+
+#TXK can be a relative good predictor
+
+plt.scatter(cdf.TXK, cdf.Average,  color='blue')
+plt.xlabel("TXK")
+plt.ylabel("Average")
+plt.show()
+
+#TNK can be a relative good predictor
+
+plt.scatter(cdf.TNK, cdf.Average,  color='blue')
+plt.xlabel("TNK")
+plt.ylabel("Average")
+plt.show()
 
